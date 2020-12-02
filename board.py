@@ -44,7 +44,9 @@ class BoardGui(tk.Frame):
         for k in range(3):
             for i in range(3):
                 string_var = self.state[(k, i)]
+                label = self.labels[(k, i)]
                 string_var.set(f'{3 * k + i + 1}')
+                label.config(fg='grey52')
 
     def set_board(self, board):
         for key in board:
@@ -59,6 +61,8 @@ class BoardGui(tk.Frame):
 
             string_var = self.state[(k, i)]
             string_var.set(board[str_key])
+            label = self.labels[(k, i)]
+            label.config(fg='black')
 
     def make(self):
         self.left_buffer = tk.Frame(self, width=10, height=10)
