@@ -4,36 +4,6 @@
 import tkinter as tk
 import copy
 
-
-class Board(object):
-    """
-    This board object is intended as a wrapper for the
-    tictactoe board used in game.py, but with the additional
-    benefit that we can attach an event trigger that fires when
-    the board is being updated.
-
-    The idea is here is that we can attach a function to update
-    the GUI board every time the board state is being updated  
-    """
-    
-    def __init__(self, init_board):
-        self.init_board = copy.deepcopy(init_board)
-        self.trigger = lambda *x: None
-        self.board = init_board
-
-    def attach_trigger(self, trigger):
-        self.trigger = trigger
-
-    def __setitem__(self, key, item):
-        # implement key-value assignment for wrapper object
-        self.board[key] = item
-        self.trigger(self.board)
-    
-    def __getitem__(self, key):
-        # implement read using key functionality for wrapper object
-        return self.board[key]
-
-
 class BoardGui(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
@@ -52,7 +22,7 @@ class BoardGui(tk.Frame):
             padx=5, pady=5
         )
 
-    def reset_board(self):
+    def reset_board(self, *args):
         """
         Reset the GUI board such that is displays only
         the numerical positions of each tile, and sets
@@ -77,7 +47,7 @@ class BoardGui(tk.Frame):
 
         for key in board:
             str_key = str(key)
-            assert str_key in ('O', 'X', ' ')
+            assert board[str_key] in ('O', 'X', ' ')
 
             if board[str_key] == ' ':
                 continue
@@ -87,9 +57,14 @@ class BoardGui(tk.Frame):
             i = (index - 1) % 3
 
             string_var = self.state[(k, i)]
-            string_var.set(board[str_key])
+            player_move = board[str_key]
+            string_var.set(player_move)
             label = self.labels[(k, i)]
-            label.config(fg='black')
+
+            if player_move == 'X':
+                label.config(fg='red')
+            else:
+                label.config(fg='blue')
 
     def make(self):
         """

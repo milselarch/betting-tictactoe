@@ -8,10 +8,9 @@ from threading import Thread
 
 # create GUI window
 gui_board = board.init_board(start=False)
-# wrap game board with board.Board
-game.board = board.Board(game.board)
 # attach write event hook to wrapper board object
-game.board.attach_trigger(gui_board.set_board)
+game.on_board_update = gui_board.set_board
+game.on_board_reset = gui_board.reset_board
 
 # start terminal-based game
 thread = Thread(target=game.game)

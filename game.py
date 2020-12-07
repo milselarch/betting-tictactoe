@@ -1,6 +1,16 @@
 # https://gist.github.com/jjlumagbas/40ac3e6cd568d81ebb83e9d5575004bc
 import getpass
 
+def on_board_update(board):
+    # callback function for when board is updated
+    # meant to be overriden
+    pass
+
+def on_board_reset(board):
+    # callback function for when board is reset
+    # meant to be overriden
+    pass
+
 def get_player_bid(max_amount, text='player bid: '):
     bid = -1
 
@@ -40,7 +50,7 @@ def theBoard(board):
     print(board['1'] + '|' + board['2'] + '|' + board['3'])
 
 # Print amount of cash each player has
-def status(player1name, player2name):
+def status(player1name, player2name, player1cash, player2cash):
     print(f"{player1name} you have ${player1cash}")
     print(f"{player2name} you have ${player2cash}")
 
@@ -69,9 +79,10 @@ def makeMove(board, name, letter):
         move = get_player_move(prompt.format(name))
 
     board[move] = letter
+    on_board_update(board)
 
 #Check if player has won
-def get_winner():
+def get_winner(board):
     # return piece (X or O) of winning player
     # returns None if there's no winner
 
@@ -105,18 +116,20 @@ def get_winner():
 player1move = 'X'
 player2move = 'O'
 
-
-#Main Game
-def game():
-    global player1cash
-    global player2cash
-
-    player1name = input("Player 1, what is your name? ")
-    player2name = input("Player 2, what is your name? ")
+def game_round(player1name, player2name):
+    board = {str(k): ' ' for k in range(1, 10)}
+    on_board_reset(board)
+    player1cash = 100
+    player2cash = 100
     winner = None
 
     for turn in range(9):
-        status(player1name, player2name) #Prints cash
+        #Prints cash
+        status(
+            player1name, player2name,
+            player1cash, player2cash
+        )
+        
         theBoard(board) #Displays board
         player1bid, player2bid = get_player_bids(
             player1name, player1cash,
@@ -135,7 +148,7 @@ def game():
             print(f"{player2name} wins the bid")
             makeMove(board, player2name, player2move)
 
-        winner = get_winner()
+        winner = get_winner(board)
         theBoard(board)
 
         if winner == player1move:
@@ -148,15 +161,34 @@ def game():
     if winner is None:
         print('No more empty pieces. Game is a draw')
 
-player1cash = 100
-player2cash = 100
+#Main Game
+def game():
+    player1name = input("Player 1, what is your name? ")
+    player2name = input("Player 2, what is your name? ")
 
+    while True:
+        # run 1 round of the game
+        game_round(player1name, player2name)
+        cont = None
+
+        while cont not in ('y', 'n'):
+            cont = input('Play again? (y/n) ')
+        
+        if cont == 'n':
+            break
+        
 # Introduction
-print("Hello! Welcome to Bidding Tic-Tac-Toe. \n [Insert Description of Game and Rules] \n Both players start with $100")
+print('''Hello! Welcome to Bidding Tic-Tac-Toe. 
+This game incorporates the classic tic-tac-toe game with the addition that both player bet against each other at every turn.
+The player that bets more money during the turn would get to play for that turn.
+There would be a total of 9 rounds and both players would start with $100. 
+Don't think it's so easy though, if you bet too much in earlier turns......
+You won't have enough to outbid the other player in the later turns.
+Let's Begin!
+''')
 print("Player 1 is X and Player 2 is O. The board is arranged like a number pad with your play being a number from 1-9")
 
 # The empty board
-board = {str(k): ' ' for k in range(1, 10)}
 
 
 if __name__ == '__main__':
