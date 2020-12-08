@@ -4,6 +4,14 @@ import multiplayer
 
 from threading import Thread
 
+"""
+Done by:
+1003158 Lim Thian Yew
+1004879 Gao Fancheng
+1005013 Joseph Low
+1005351 Janani Sureshkumar
+"""
+
 # https://docs.python.org/3/library/threading.html
 # https://benedictwilkinsai.github.io/post/tkinter-mp/
 
