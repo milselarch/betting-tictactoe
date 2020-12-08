@@ -1,8 +1,12 @@
 import getpass
 import time
+import get_input
 
 from libdw import pyrebase
 from time import sleep
+
+input = get_input.get_input
+
 
 def on_board_update(board):
     # callback function for when board is updated

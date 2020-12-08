@@ -3,6 +3,9 @@
 
 import tkinter as tk
 import copy
+import get_input
+
+input = get_input.get_input
 
 class BoardGui(tk.Frame):
     def __init__(self, master):

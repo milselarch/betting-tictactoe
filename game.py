@@ -1,5 +1,9 @@
 # https://gist.github.com/jjlumagbas/40ac3e6cd568d81ebb83e9d5575004bc
 import getpass
+import get_input
+
+input = get_input.get_input
+
 
 def on_board_update(board):
     # callback function for when board is updated

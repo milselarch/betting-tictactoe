@@ -1,6 +1,7 @@
 import game
 import board
 import multiplayer
+import get_input
 
 from threading import Thread
 
@@ -11,6 +12,8 @@ Done by:
 1005013 Joseph Low
 1005351 Janani Sureshkumar
 """
+
+input = get_input.get_input
 
 # https://docs.python.org/3/library/threading.html
 # https://benedictwilkinsai.github.io/post/tkinter-mp/
