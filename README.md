@@ -1,4 +1,4 @@
-# betting-tictactoe!
+# betting-tictactoe
 
 ![Screenshot from 2022-04-24 01-07-47](https://user-images.githubusercontent.com/11241733/164916313-e39181be-2d66-485c-9aa9-c60d45446ce5.png)
 
